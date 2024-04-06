@@ -10,34 +10,34 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "baseUrl": "src",
-    // "paths": {
-    //   "@routes": [
-    //     "routes"
-    //   ],
-    //   "@controllers": [
-    //     "controllers"
-    //   ],
-    //   "@middlewares": [
-    //     "middlewares"
-    //   ],
-    //   "@utils": [
-    //     "utils"
-    //   ],
-    //   "@service": [
-    //     "service"
-    //   ],
-    //   "@models": [
-    //     "models"
-    //   ],
-    //   "@repositories": [
-    //     "repositories"
-    //   ],
-    //   "@errors": [
-    //     "errors"
-    //   ],
-    //   "@config": [
-    //     "config"
-    //   ]
-    //  }
+    "paths": {
+      "@routes": [
+        "routes"
+      ],
+      "@controllers": [
+        "controllers"
+      ],
+      "@middlewares": [
+        "middlewares"
+      ],
+      "@utils": [
+        "utils"
+      ],
+      "@service": [
+        "domain/service"
+      ],
+      "@models": [
+        "domain/models"
+      ],
+      "@repositories": [
+        "domain/repositories"
+      ],
+      "@errors": [
+        "errors"
+      ],
+      "@config": [
+        "config"
+      ]
+     }
   },
 }
