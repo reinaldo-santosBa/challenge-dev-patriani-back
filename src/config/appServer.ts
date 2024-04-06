@@ -4,6 +4,7 @@ import dotenv from  'dotenv';
 import cors from 'cors';
 import { AppError } from '@errors';
 import { ErrorHandler } from '@middlewares';
+import { EnterpriseRouter } from '@routes';
 
 export interface IExpress {
     error: Error, req: Request, res: Response, next: NextFunction
@@ -40,6 +41,6 @@ export class AppServer {
 		});
 	}
 	private configureRoutes() {
-		this.app.get('/',(req,res)=> res.json('teste'));
+		this.app.use('/enterprise', EnterpriseRouter);
 	}
 }

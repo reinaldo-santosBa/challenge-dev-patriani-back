@@ -3,4 +3,5 @@ export interface Enterprise {
     name: string
     purpose: string
     riNumber: string
+    addressId:number
 }

@@ -15,7 +15,8 @@ model enterprises {
   name String
   purpose String
   riNumber String
-
+  address   address @relation(fields: [addressId], references: [id])
+  addressId Int @unique
 } 
 
 model address {
@@ -26,4 +27,6 @@ model address {
   city String
   state String
   cep String
+  enterprises enterprises?
+
 }

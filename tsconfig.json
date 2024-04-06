@@ -15,7 +15,7 @@
         "routes"
       ],
       "@controllers": [
-        "controllers"
+        "domain/controllers"
       ],
       "@middlewares": [
         "middlewares"

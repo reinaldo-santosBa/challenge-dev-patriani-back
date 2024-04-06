@@ -3,7 +3,9 @@ CREATE TABLE "enterprises" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" TEXT NOT NULL,
     "purpose" TEXT NOT NULL,
-    "riNumber" TEXT NOT NULL
+    "riNumber" TEXT NOT NULL,
+    "addressId" INTEGER NOT NULL,
+    CONSTRAINT "enterprises_addressId_fkey" FOREIGN KEY ("addressId") REFERENCES "address" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -16,3 +18,6 @@ CREATE TABLE "address" (
     "state" TEXT NOT NULL,
     "cep" TEXT NOT NULL
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "enterprises_addressId_key" ON "enterprises"("addressId");
