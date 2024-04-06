@@ -26,8 +26,8 @@
       "@service": [
         "domain/service"
       ],
-      "@models": [
-        "domain/models"
+      "@model": [
+        "domain/model"
       ],
       "@repositories": [
         "domain/repositories"
