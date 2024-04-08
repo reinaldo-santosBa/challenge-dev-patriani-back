@@ -1,14 +1,14 @@
 import express, { Application, NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
-import dotenv from  'dotenv';
+import dotenv from 'dotenv';
 import cors from 'cors';
 import { AppError } from '@errors';
 import { ErrorHandler } from '@middlewares';
 import { EnterpriseRouter } from '@routes';
+import swaggerUi from 'swagger-ui-express'
+import swaggerJsdoc from 'swagger-jsdoc';
+import { url } from 'inspector';
 
-export interface IExpress {
-    error: Error, req: Request, res: Response, next: NextFunction
-}
 dotenv.config();
 export class AppServer {
 	private app: Application;
@@ -16,6 +16,7 @@ export class AppServer {
 		this.app = express();
 		this.configureMiddleware();
 		this.configureRoutes();
+		this.configureDoc();
 		this.configureErrorHandling();
 		const port = Number(process.env.PORT || 3000);
 		this.start(port);
@@ -42,5 +43,25 @@ export class AppServer {
 	}
 	private configureRoutes() {
 		this.app.use('/enterprise', EnterpriseRouter);
+	}
+	private configureDoc() {
+		const options = {
+			swaggerDefinition: {
+				info: {
+					title: 'Patriani crud enterprises test',
+					version: '1.0.0',
+					description: 'Documentation created for the patriani test of a list of enterprises',
+				},
+			},
+			apis: ['./src/routes/*.ts'],
+			servers: [
+				{
+					url: 'http://localhost:3000',
+					description: 'Servidor de desenvolvimento',
+				},
+			],
+		};
+		const specs = swaggerJsdoc(options);
+		this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
 	}
 }

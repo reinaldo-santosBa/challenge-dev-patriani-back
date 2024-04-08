@@ -4,10 +4,10 @@ import { dbConfig } from 'server';
 
 export class EnterpriseRepositories {
 	async create(enterprises: Enterprise): Promise<Enterprise> {
-		console.log( { id: enterprises.addressId } );
+		console.log({ id: enterprises.addressId });
 
 		try {
-			
+
 			const newEnterprise = await dbConfig.enterprises.create({
 				data: {
 					name: enterprises.name,
@@ -22,20 +22,23 @@ export class EnterpriseRepositories {
 		}
 	}
 	async update(enterprises: Enterprise): Promise<Enterprise> {
-		try {
-			const editEnterprise = await dbConfig.enterprises.update(
-				{
-					where: {
-						id: enterprises.id
-					},
-					data: enterprises
-				}
-			);
-			return editEnterprise;
-		} catch (error) {
-			throw new AppError('Internal server error', 500);
+		const enterprise = await dbConfig.enterprises.findUnique({
+			where: {
+				id: enterprises.id
+			}
+		});
+		if (!enterprise) {
+			throw new AppError('Not content', 204);
 		}
-
+		const editEnterprise = await dbConfig.enterprises.update(
+			{
+				where: {
+					id: enterprises.id
+				},
+				data: enterprises
+			}
+		);
+		return editEnterprise;
 	}
 	async remove(id: number): Promise<null> {
 		try {
@@ -66,23 +69,18 @@ export class EnterpriseRepositories {
 		}
 	}
 	async getById(id: number): Promise<Enterprise> {
-		try {
-			const enterprise = await dbConfig.enterprises.findUnique({
-				where: {
-					id
-				},
-				include: {
-					address: true
-				}
-			});
-			if (!enterprise) {
-				throw new AppError('Not content', 204);
+		const enterprise = await dbConfig.enterprises.findUnique({
+			where: {
+				id
+			},
+			include: {
+				address: true
 			}
-			return enterprise;
-
-		} catch (error) {
-			throw new AppError('Internal server error', 500);
+		});
+		if (!enterprise) {
+			throw new AppError('Not content', 204);
 		}
+		return enterprise;
 
 	}
 }
