@@ -9,4 +9,4 @@ EnterpriseRouter.get('/',controllerAddress.getAll);
 EnterpriseRouter.get('/:id',controllerAddress.getById);
 EnterpriseRouter.patch('/',controllerAddress.update);
 EnterpriseRouter.post('/',controllerAddress.create);
-EnterpriseRouter.delete('/',controllerAddress.delete);
+EnterpriseRouter.delete('/:id',controllerAddress.delete);

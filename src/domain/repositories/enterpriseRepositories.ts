@@ -2,77 +2,86 @@ import { AppError } from '@errors';
 import { Enterprise } from '@model';
 import { dbConfig } from 'server';
 
-export class EnterpriseRepositories{
-	async create(enterprises: Enterprise):Promise<Enterprise>{
+export class EnterpriseRepositories {
+	async create(enterprises: Enterprise): Promise<Enterprise> {
+		console.log( { id: enterprises.addressId } );
+
 		try {
-			const newEnterprise = await dbConfig.enterprises.create({data:enterprises});
+			
+			const newEnterprise = await dbConfig.enterprises.create({
+				data: {
+					name: enterprises.name,
+					purpose: enterprises.purpose,
+					riNumber: enterprises.riNumber,
+					address: { connect: { id: enterprises.addressId } }
+				}
+			});
 			return newEnterprise;
 		} catch (error) {
-			console.log(error);
-			throw new AppError('Internal server error',500);
+			throw new AppError('Internal server error', 500);
 		}
 	}
-	async update(enterprises: Enterprise):Promise<Enterprise>{
+	async update(enterprises: Enterprise): Promise<Enterprise> {
 		try {
 			const editEnterprise = await dbConfig.enterprises.update(
-				{ 
-					where:{
-						id :enterprises.id
+				{
+					where: {
+						id: enterprises.id
 					},
-					data: enterprises 
+					data: enterprises
 				}
 			);
 			return editEnterprise;
 		} catch (error) {
-			throw new AppError('Internal server error',500);
+			throw new AppError('Internal server error', 500);
 		}
-		
+
 	}
-	async remove(id: number): Promise<null>{
+	async remove(id: number): Promise<null> {
 		try {
 			await dbConfig.enterprises.delete(
 				{
-					where:{
+					where: {
 						id
 					},
 				}
 			);
 			return null;
 		} catch (error) {
-			throw new AppError('Internal server error',500);
+			throw new AppError('Internal server error', 500);
 		}
-	
+
 
 	}
-	async getAll():Promise<Enterprise[]>{
+	async getAll(): Promise<Enterprise[]> {
 		try {
 			const allEnterprise = await dbConfig.enterprises.findMany({
-				include:{
+				include: {
 					address: true
 				}
 			});
 			return allEnterprise;
 		} catch (error) {
-			throw new AppError('Internal server error',500);
+			throw new AppError('Internal server error', 500);
 		}
 	}
-	async getById(id: number):Promise<Enterprise>{
+	async getById(id: number): Promise<Enterprise> {
 		try {
 			const enterprise = await dbConfig.enterprises.findUnique({
-				where:{
+				where: {
 					id
 				},
-				include:{
+				include: {
 					address: true
 				}
 			});
-			if(!enterprise){
-				throw new AppError('Not content',204);
+			if (!enterprise) {
+				throw new AppError('Not content', 204);
 			}
 			return enterprise;
 
 		} catch (error) {
-			throw new AppError('Internal server error',500);
+			throw new AppError('Internal server error', 500);
 		}
 
 	}

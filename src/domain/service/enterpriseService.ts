@@ -4,7 +4,7 @@ import { AddressRepositories, EnterpriseRepositories } from '@repositories';
 
 export class EnterpriseService {
 	enterpriseRepositories = new EnterpriseRepositories();
-	async create(enterprise: Enterprise):Promise<Enterprise>{
+	async create(enterprise: Enterprise):Promise<Enterprise>{		
 		try {
 			const newEnterprise = await this.enterpriseRepositories.create(enterprise);
 			return newEnterprise; 
@@ -23,11 +23,12 @@ export class EnterpriseService {
 	}
 
 	async del(id: number):Promise<null>{
-		try {
+		try {			
 			const addressRepositories = new AddressRepositories();
-			const enterprise = await this.enterpriseRepositories.getById(id);
-			await addressRepositories.remove(enterprise.addressId);
+			const enterprise = await this.enterpriseRepositories.getById(id);			
 			await this.enterpriseRepositories.remove(id);
+			await addressRepositories.remove(enterprise.addressId);
+
 			return null;
 		} catch (error) {
 			throw new AppError('Internal server erro',500);

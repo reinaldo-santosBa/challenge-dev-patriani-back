@@ -9,6 +9,7 @@ export class AddressService {
 			const newAddress = await addressRepositories.create(address);
 			return newAddress; 
 		} catch (error) {
+			console.log(error)
 			throw new AppError('Internal server erro',500);
 		}
 	}
@@ -18,7 +19,7 @@ export class AddressService {
 			const addressRepositories = new AddressRepositories();
 			const updateAddress = await addressRepositories.update(address);
 			return updateAddress;
-		} catch (error) {
+		} catch (error) {			
 			throw new AppError('Internal server erro',500);
 		}
 	}

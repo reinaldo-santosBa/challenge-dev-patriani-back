@@ -6,9 +6,11 @@ export class AddressRepositories{
 	
 	async create(address: Address):Promise<Address>{
 		try {
-			const newAddress = await dbConfig.address.create({data:address});
+			const newAddress = await dbConfig.address.create({data:address});			
 			return newAddress;
 		} catch (error) {			
+			console.log(1);
+			
 			throw new AppError('Internal server error',500);
 		}
 	}
@@ -23,7 +25,7 @@ export class AddressRepositories{
 				}
 			);
 			return editAddress;
-		} catch (error) {
+		} catch (error) {			
 			throw new AppError('Internal server error',500);
 		}
 		
