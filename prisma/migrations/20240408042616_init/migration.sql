@@ -4,6 +4,7 @@ CREATE TABLE "enterprises" (
     "name" TEXT NOT NULL,
     "purpose" TEXT NOT NULL,
     "riNumber" TEXT NOT NULL,
+    "status" TEXT NOT NULL,
     "addressId" INTEGER NOT NULL,
     CONSTRAINT "enterprises_addressId_fkey" FOREIGN KEY ("addressId") REFERENCES "address" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
