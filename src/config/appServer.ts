@@ -5,9 +5,8 @@ import cors from 'cors';
 import { AppError } from '@errors';
 import { ErrorHandler } from '@middlewares';
 import { EnterpriseRouter } from '@routes';
-import swaggerUi from 'swagger-ui-express'
+import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
-import { url } from 'inspector';
 
 dotenv.config();
 export class AppServer {
@@ -18,7 +17,7 @@ export class AppServer {
 		this.configureRoutes();
 		this.configureDoc();
 		this.configureErrorHandling();
-		const port = Number(process.env.PORT || 3000);
+		const port = Number(process.env.PORT || 3001);
 		this.start(port);
 	}
 
