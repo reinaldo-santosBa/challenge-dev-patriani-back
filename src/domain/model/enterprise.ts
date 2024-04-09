@@ -4,4 +4,5 @@ export interface Enterprise {
     purpose: string
     riNumber: string
     addressId:number
+    status: string
 }
