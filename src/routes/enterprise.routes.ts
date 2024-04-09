@@ -1,7 +1,7 @@
 import { EnterpriseController } from '@controllers';
 import express from 'express';
 
-const controllerAddress = new EnterpriseController();
+const controllerEnterprise = new EnterpriseController();
 
 export const EnterpriseRouter = express.Router();
 /**
@@ -17,7 +17,7 @@ export const EnterpriseRouter = express.Router();
  *       204:
  *          description: Not content
  *  */
-EnterpriseRouter.get('/',controllerAddress.getAll);
+EnterpriseRouter.get('/',controllerEnterprise.getAll);
 /**
  * @swagger
  * /enterprise/{id}:
@@ -37,7 +37,7 @@ EnterpriseRouter.get('/',controllerAddress.getAll);
  *       204:
  *          description: Not content
  *  */
-EnterpriseRouter.get('/:id',controllerAddress.getById);
+EnterpriseRouter.get('/:id',controllerEnterprise.getById);
 /**
  * @swagger
  * /enterprise:
@@ -48,11 +48,6 @@ EnterpriseRouter.get('/:id',controllerAddress.getById);
  *     produces:
  *       - application/json
  *     parameters:
- *       - in: path
- *         name: id
- *         description: ID da empresa a ser atualizada
- *         required: true
- *         type: integer
  *       - in: body
  *         name: data
  *         description: Dados da empresa e do endereço a serem atualizados
@@ -70,6 +65,8 @@ EnterpriseRouter.get('/:id',controllerAddress.getById);
  *                 purpose:
  *                   type: string
  *                 riNumber:
+ *                   type: string
+ *                 status:
  *                   type: string
  *             address:
  *               type: object
@@ -97,7 +94,7 @@ EnterpriseRouter.get('/:id',controllerAddress.getById);
  *          description: Not content
  */
 
-EnterpriseRouter.patch('/',controllerAddress.update);
+EnterpriseRouter.patch('/',controllerEnterprise.update);
 /**
  * @swagger
  * /enterprise:
@@ -139,13 +136,15 @@ EnterpriseRouter.patch('/',controllerAddress.update);
  *                   type: string
  *                 riNumber:
  *                   type: string
+ *                 status:
+ *                   type: string
  *     responses:
  *       201:
  *         description: Empresa criada com sucesso
  *       500:
  *         description: Internal server error
  */
-EnterpriseRouter.post('/',controllerAddress.create);
+EnterpriseRouter.post('/',controllerEnterprise.create);
 /**
  * @swagger
  * /enterprise/{id}:
@@ -165,4 +164,4 @@ EnterpriseRouter.post('/',controllerAddress.create);
  *       204:
  *          description: Not content
  *  */
-EnterpriseRouter.delete('/:id',controllerAddress.delete);
+EnterpriseRouter.delete('/:id',controllerEnterprise.delete);
