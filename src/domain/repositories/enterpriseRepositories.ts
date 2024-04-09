@@ -4,21 +4,19 @@ import { dbConfig } from 'server';
 
 export class EnterpriseRepositories {
 	async create(enterprises: Enterprise): Promise<Enterprise> {
-		console.log({ id: enterprises.addressId });
-
 		try {
-
 			const newEnterprise = await dbConfig.enterprises.create({
 				data: {
 					name: enterprises.name,
 					purpose: enterprises.purpose,
 					riNumber: enterprises.riNumber,
+					status: enterprises.status,
 					address: { connect: { id: enterprises.addressId } }
 				}
 			});
 			return newEnterprise;
-		} catch (error) {
-			throw new AppError('Internal server error', 500);
+		}catch(error){
+			throw new AppError(error + '', 500);
 		}
 	}
 	async update(enterprises: Enterprise): Promise<Enterprise> {
@@ -30,15 +28,19 @@ export class EnterpriseRepositories {
 		if (!enterprise) {
 			throw new AppError('Not content', 204);
 		}
-		const editEnterprise = await dbConfig.enterprises.update(
-			{
-				where: {
-					id: enterprises.id
-				},
-				data: enterprises
-			}
-		);
-		return editEnterprise;
+		try {
+			const editEnterprise = await dbConfig.enterprises.update(
+				{
+					where: {
+						id: enterprises.id
+					},
+					data: enterprises
+				}
+			);
+			return editEnterprise;
+		} catch (error) {
+			throw new AppError(error + '', 500);
+		}
 	}
 	async remove(id: number): Promise<null> {
 		try {
@@ -51,7 +53,7 @@ export class EnterpriseRepositories {
 			);
 			return null;
 		} catch (error) {
-			throw new AppError('Internal server error', 500);
+			throw new AppError(error + '', 500);
 		}
 
 
@@ -65,18 +67,23 @@ export class EnterpriseRepositories {
 			});
 			return allEnterprise;
 		} catch (error) {
-			throw new AppError('Internal server error', 500);
+			throw new AppError(error + '', 500);
 		}
 	}
 	async getById(id: number): Promise<Enterprise> {
-		const enterprise = await dbConfig.enterprises.findUnique({
-			where: {
-				id
-			},
-			include: {
-				address: true
-			}
-		});
+		let enterprise;
+		try {
+			enterprise = await dbConfig.enterprises.findUnique({
+				where: {
+					id
+				},
+				include: {
+					address: true
+				}
+			});
+		} catch (error) {
+			throw new AppError(error + '', 500);
+		}
 		if (!enterprise) {
 			throw new AppError('Not content', 204);
 		}
