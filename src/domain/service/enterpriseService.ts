@@ -5,7 +5,7 @@ import { AddressRepositories, EnterpriseRepositories } from '@repositories';
 export class EnterpriseService {
 	enterpriseRepositories = new EnterpriseRepositories();
 	async create(enterprise: Enterprise): Promise<Enterprise> {
-		const newEnterprise = await this.enterpriseRepositories.create(enterprise);
+		const newEnterprise = await this.enterpriseRepositories.create(enterprise);		
 		return newEnterprise;
 	}
 
@@ -25,7 +25,7 @@ export class EnterpriseService {
 	async getAll(): Promise<Enterprise[]> {
 		const enterpriseList = await this.enterpriseRepositories.getAll();
 		if(enterpriseList.length === 0){
-			throw new AppError('',204)
+			throw new AppError('',204);
 		}
 		return enterpriseList;
 	}
